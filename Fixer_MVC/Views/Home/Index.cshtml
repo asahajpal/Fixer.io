@@ -1,0 +1,86 @@
+﻿@using Proff_MVC.Models
+@model CompanyViewModel
+
+@{
+    ViewData["Title"] = "Proff MVC Lookup";
+}
+
+<!--
+<form asp-controller="Home" asp-action="Index">
+    <p>
+        <input type="text" name="SearchString" />
+        <input type="submit" value="Search" />
+    </p>
+</form>
+-->
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Companies[0].organisationNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Companies[0].name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Companies)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.organisationNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.PreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.NextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>
+<!--
+<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex - 1)" class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+
+<a asp-action="Index" asp-route-pageNumber="@(Model.TotalPages + 1)" class="btn btn-primary @nextDisabled">
+    Next
+</a>
+-->
+
+<!--
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+    -->
