@@ -14,14 +14,12 @@ namespace Fixer_MVC.Models
         [Display(Name = "ExchangeRateValue")]
         [Required]
         public float value { get; set; }
-
     }
 
     public class CurrencyRateViewModel
     {
         public CurrencyRateViewModel(List<CurrencyRate> searchResult = null)
         {
-
             CurrencyRates = searchResult ?? new List<CurrencyRate>();
         }
 

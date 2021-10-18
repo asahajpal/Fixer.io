@@ -40,11 +40,13 @@ namespace Fixer_MVC
             var servicePoints = new FixerServiceSettings();
             Configuration.GetSection(FixerServiceSettings.ServiceSettings).Bind(servicePoints);  // binding here
 
+            services.AddSingleton(servicePoints);
+
             services.AddHttpClient<IFixerServiceClient, FixerServiceClient>(servicePoints.ApiTag,
             //services.AddHttpClient(servicePoints.ApiTag,
                 client =>
                 {
-                    client.BaseAddress = new Uri(servicePoints.BaseUrl+servicePoints.EndPoint+"access_key="+servicePoints.AccessKey);
+                    client.BaseAddress = new Uri(servicePoints.BaseUrl);
                     //client.DefaultRequestHeaders.Add("AccessKey", servicePoints.AccessKey);
                 });
         }
@@ -76,16 +78,17 @@ namespace Fixer_MVC
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
-        internal class FixerServiceSettings
-        {
-            public const string ServiceSettings = "ServiceSettings";
-            public string ApiTag { get; set; }
+    }
 
-            public string AccessKey { get; set; }
+    public class FixerServiceSettings
+    {
+        public const string ServiceSettings = "ServiceSettings";
+        public string ApiTag { get; set; }
 
-            public string BaseUrl { get; set; }
+        public string AccessKey { get; set; }
 
-            public string EndPoint { get; set; }
-        }
+        public string BaseUrl { get; set; }
+
+        public string EndPoint { get; set; }
     }
 }
