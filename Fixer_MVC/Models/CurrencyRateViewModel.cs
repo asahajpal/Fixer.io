@@ -29,6 +29,9 @@ namespace Fixer_MVC.Models
         /// Gets or sets Customers.
         ///</summary>
         public List<CurrencyRate> CurrencyRates { get; set; }
+        public string errorInfo { get; set; }
+
+        public string BaseCurrency { get; set; }
 
     }
 

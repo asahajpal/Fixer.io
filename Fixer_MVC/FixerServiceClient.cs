@@ -21,10 +21,15 @@ namespace Fixer_MVC
             _client = client;
         }
 
-        public async Task<CurrencyRateViewModel> GetLatestRates(string query )
+        public async Task<CurrencyRateViewModel> GetLatestRates(string sym )
         {
-            query = string.Empty;
-            var lookupResult = await _client.GetAsync(query);
+            HttpResponseMessage lookupResult;
+
+            if (sym.Equals("*"))
+                lookupResult = await _client.GetAsync(_client.BaseAddress);
+            else
+                lookupResult = await _client.GetAsync(_client.BaseAddress+"&symbols="+sym);
+
             var searchResults = new List<CurrencyRate>();
             CurrencyRateViewModel currecyRateViewModel = new CurrencyRateViewModel();
 
@@ -34,22 +39,33 @@ namespace Fixer_MVC
                 readTask.Wait();
 
                 var jsonString = readTask.Result;
-                JObject latestRates = JObject.Parse(jsonString);
+                JObject response = JObject.Parse(jsonString);
 
-                // get JSON result objects into a list
-                IList<JToken> results = latestRates["rates"].Children().ToList();
+                var successVal = response["success"].ToString();
 
-                // serialize JSON results into .NET objects
-
-                foreach (JToken result in results)
+                if (successVal.Equals("true", StringComparison.OrdinalIgnoreCase))
                 {
-                    var currencyRate = result.ToObject(typeof(JObject));
+                    // get JSON result objects into a list
+                    IList<JToken> results = response["rates"].Children().ToList();
 
-                    var currRate =  currencyRate.ToString().Split(':');
-                    var currRateObj = new CurrencyRate();
-                    currRateObj.symbol = currRate[0];
-                    currRateObj.value = float.Parse(currRate[1].Trim(), CultureInfo.InvariantCulture);
-                    searchResults.Add(currRateObj);
+                    // serialize JSON results into .NET objects
+
+                    foreach (JToken result in results)
+                    {
+                        var currencyRate = result.ToObject(typeof(JObject));
+
+                        var currRate = currencyRate.ToString().Split(':');
+                        var currRateObj = new CurrencyRate();
+                        currRateObj.symbol = currRate[0];
+                        currRateObj.value = float.Parse(currRate[1].Trim(), CultureInfo.InvariantCulture);
+                        searchResults.Add(currRateObj);
+                    }
+
+                    currecyRateViewModel.BaseCurrency = response["base"].ToString();
+                }
+                else
+                {
+                    currecyRateViewModel.errorInfo = response["error"].ToString();
                 }
 
                 currecyRateViewModel.CurrencyRates = searchResults;

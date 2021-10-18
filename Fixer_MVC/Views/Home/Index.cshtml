@@ -5,25 +5,25 @@
     ViewData["Title"] = "Fixer MVC Lookup";
 }
 
-<!--
-<form asp-controller="Home" asp-action="Index">
-    <p>
-        <input type="text" name="SearchString" />
-        <input type="submit" value="Search" />
-    </p>
-</form>
--->
-
 <form asp-action="Index" method="get">
     <div class="form-actions no-color">
         <p>
-            Find by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
-            <input type="submit" value="Search" class="btn btn-default" /> |
-            <a asp-action="Index">Try Again!</a>
+            Base Currency: @Html.DisplayFor(modelItem => Model.BaseCurrency)
+            <br />
+            Target Currency: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="GetRates" class="btn btn-default" />
+            <!--<a asp-action="Index">Try Again!</a>-->
         </p>
     </div>
 </form>
 
+@if ( !String.IsNullOrEmpty(Model.errorInfo)) 
+{
+<tr>
+    @Html.DisplayFor(modelItem => Model.errorInfo)
+</tr>
+}
+else {
 <table class="table">
     <thead>
         <tr>
@@ -39,15 +39,16 @@
     <tbody>
         @foreach (var item in Model.CurrencyRates)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.symbol)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.value)
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.symbol)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.value)
+            </td>
+        </tr>
         }
     </tbody>
 </table>
+}
 
