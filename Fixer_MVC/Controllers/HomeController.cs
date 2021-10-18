@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Proff_MVC.Models;
+using Fixer_MVC.Models;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
@@ -35,20 +35,12 @@ namespace Fixer_MVC.Controllers
             _client = fixerClient;
         }
 
-        public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)
+        public async Task<IActionResult> Index( string searchString)
 
         {
-            CompanyViewModel companyViewModel = new();
+            CurrencyRateViewModel currencyRateViewModel = new();
 
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                pageNumber = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
-
+         
             if (!String.IsNullOrEmpty(searchString))
             {
                 try
@@ -59,8 +51,7 @@ namespace Fixer_MVC.Controllers
                         //var client = _factory.CreateClient("ProffApi");
                         //var httpClient = _client.Client;
 
-                        companyViewModel = await _client.GetCompaniesAsync(string.Format("?industry={0}&pageNumber={1}&pageSize={2}",
-                            searchString, pageNumber, 10));
+                        currencyRateViewModel = await _client.GetLatestRates(searchString);
 
                     }
                 }
@@ -70,7 +61,7 @@ namespace Fixer_MVC.Controllers
                 }
             }
 
-            return companyViewModel != null ? View(companyViewModel) : throw new Exception("No Hit \\ Ingen treff ! ");
+            return currencyRateViewModel != null ? View(currencyRateViewModel) : throw new Exception("No Hit \\ Ingen treff ! ");
 
         }
 

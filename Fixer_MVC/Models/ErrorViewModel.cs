@@ -1,6 +1,6 @@
 using System;
 
-namespace Proff_MVC.Models
+namespace Fixer_MVC.Models
 {
     public class ErrorViewModel
     {

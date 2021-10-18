@@ -44,8 +44,8 @@ namespace Fixer_MVC
             //services.AddHttpClient(servicePoints.ApiTag,
                 client =>
                 {
-                    client.BaseAddress = new Uri(servicePoints.Endpoint);
-                    client.DefaultRequestHeaders.Add("Token", servicePoints.AuthToken);
+                    client.BaseAddress = new Uri(servicePoints.BaseUrl+servicePoints.EndPoint+"access_key="+servicePoints.AccessKey);
+                    //client.DefaultRequestHeaders.Add("AccessKey", servicePoints.AccessKey);
                 });
         }
 
@@ -81,11 +81,11 @@ namespace Fixer_MVC
             public const string ServiceSettings = "ServiceSettings";
             public string ApiTag { get; set; }
 
-            public string AuthToken { get; set; }
+            public string AccessKey { get; set; }
 
-            public string Endpoint { get; set; }
+            public string BaseUrl { get; set; }
 
-
+            public string EndPoint { get; set; }
         }
     }
 }

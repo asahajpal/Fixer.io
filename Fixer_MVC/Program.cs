@@ -27,7 +27,7 @@ namespace Fixer_MVC
                 {
                     webBuilder.UseStartup<Startup>().
                     //UseKestrel();
-                    UseIISIntegration(); 
+                    UseIISIntegration();
                 });
     }
 }

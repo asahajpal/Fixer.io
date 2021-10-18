@@ -1,13 +1,14 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
-using Proff_MVC.Models;
+using Fixer_MVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace Fixer_MVC
 {
@@ -20,11 +21,12 @@ namespace Fixer_MVC
             _client = client;
         }
 
-        public async Task<CompanyViewModel> GetCompaniesAsync(string query)
+        public async Task<CurrencyRateViewModel> GetLatestRates(string query )
         {
+            query = string.Empty;
             var lookupResult = await _client.GetAsync(query);
-            var searchResults = new List<Company>();
-            CompanyViewModel companyViewModel = new CompanyViewModel();
+            var searchResults = new List<CurrencyRate>();
+            CurrencyRateViewModel currecyRateViewModel = new CurrencyRateViewModel();
 
             if (lookupResult.IsSuccessStatusCode)
             {
@@ -32,25 +34,27 @@ namespace Fixer_MVC
                 readTask.Wait();
 
                 var jsonString = readTask.Result;
-                JObject compSearch = JObject.Parse(jsonString);
+                JObject latestRates = JObject.Parse(jsonString);
 
                 // get JSON result objects into a list
-                IList<JToken> results = compSearch["companies"].Children().ToList();
+                IList<JToken> results = latestRates["rates"].Children().ToList();
 
                 // serialize JSON results into .NET objects
 
                 foreach (JToken result in results)
                 {
-                    Company companyInfo = result.ToObject<Company>();
-                    searchResults.Add(companyInfo);
+                    var currencyRate = result.ToObject(typeof(JObject));
+
+                    var currRate =  currencyRate.ToString().Split(':');
+                    var currRateObj = new CurrencyRate();
+                    currRateObj.symbol = currRate[0];
+                    currRateObj.value = float.Parse(currRate[1].Trim(), CultureInfo.InvariantCulture);
+                    searchResults.Add(currRateObj);
                 }
 
-                companyViewModel.Companies = searchResults;
-                companyViewModel.TotalPages = compSearch["pagination"]["NumberOfAvailablePages"].ToObject<int>();
-                companyViewModel.PageSize = compSearch["pagination"]["PageSize"].ToObject<int>();
-                companyViewModel.PageIndex = compSearch["pagination"]["CurrentPage"].ToObject<int>();
-
-                return companyViewModel;
+                currecyRateViewModel.CurrencyRates = searchResults;
+             
+                return currecyRateViewModel;
             }
             else //web api sent error response 
             {

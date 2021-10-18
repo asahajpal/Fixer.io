@@ -1,8 +1,8 @@
-﻿@using Proff_MVC.Models
-@model CompanyViewModel
+﻿@using Fixer_MVC.Models
+@model CurrencyRateViewModel
 
 @{
-    ViewData["Title"] = "Proff MVC Lookup";
+    ViewData["Title"] = "Fixer MVC Lookup";
 }
 
 <!--
@@ -19,7 +19,7 @@
         <p>
             Find by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
             <input type="submit" value="Search" class="btn btn-default" /> |
-            <a asp-action="Index">Back to Full List</a>
+            <a asp-action="Index">Try Again!</a>
         </p>
     </div>
 </form>
@@ -28,59 +28,26 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Companies[0].organisationNumber)
+                @Html.DisplayNameFor(model => model.CurrencyRates[0].symbol)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Companies[0].name)
+                @Html.DisplayNameFor(model => model.CurrencyRates[0].value)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Companies)
+        @foreach (var item in Model.CurrencyRates)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.organisationNumber)
+                    @Html.DisplayFor(modelItem => item.symbol)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.name)
+                    @Html.DisplayFor(modelItem => item.value)
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
-@{
-    var prevDisabled = !Model.PreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.NextPage ? "disabled" : "";
-}
-
-<a asp-action="Index"
-   asp-route-pageNumber="@(Model.PageIndex - 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @prevDisabled">
-    Previous
-</a>
-<a asp-action="Index"
-   asp-route-pageNumber="@(Model.PageIndex + 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @nextDisabled">
-    Next
-</a>
-<!--
-<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex - 1)" class="btn btn-primary @prevDisabled">
-    Previous
-</a>
-
-<a asp-action="Index" asp-route-pageNumber="@(Model.TotalPages + 1)" class="btn btn-primary @nextDisabled">
-    Next
-</a>
--->
-
-<!--
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-    -->
