@@ -67,7 +67,7 @@ namespace Fixer_MVC.Controllers
                 try
                 {
                     convertedAmount = _client.ConvertAmount(baseCurr, targetCurr, amount).Result;
-
+                    ViewData["convertedAmount"] = convertedAmount;
                 }
                 catch (Exception ex)
                 {
