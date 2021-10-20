@@ -1,17 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Fixer_MVC.Models;
-using System.Net.Http;
-using System.Net.Http.Headers;
-
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-using Microsoft.Extensions.Configuration;
+using Fixer_MVC.DataModel;
 
 namespace Fixer_MVC.Controllers
 {
@@ -19,50 +13,69 @@ namespace Fixer_MVC.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IFixerServiceClient _client;
-        //private readonly IHttpClientFactory _factory;
-        //private readonly IConfiguration _config;
 
         public HomeController(
             ILogger<HomeController> logger, 
             IFixerServiceClient fixerClient
-        //  IHttpClientFactory factory,
-       //   IConfiguration  config
-            )
+        )
         {            
             _logger = logger;
-            //_factory = factory;
-            //_config = config;
             _client = fixerClient;
         }
 
-        public async Task<IActionResult> Index( string searchString)
+        public async Task<IActionResult> Index( string targetCurr)
 
         {
+            CurrencyRateDataModel currencyRateDataModel = new();
             CurrencyRateViewModel currencyRateViewModel = new();
 
-         
-            if (!String.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(targetCurr))
             {
                 try
                 {
                     {
-                        ViewData["CurrentFilter"] = searchString;
-
-                        //var client = _factory.CreateClient("ProffApi");
-                        //var httpClient = _client.Client;
-
-                        currencyRateViewModel = await _client.GetLatestRates(searchString);
-
+                        currencyRateDataModel = await _client.GetLatestRates(targetCurr);
                     }
+                }
+                catch (Exception ex)
+                {
+                    currencyRateViewModel.errorInfo = ex.Message;
+                    return View(currencyRateViewModel);
+                }
+            }
+
+            if (currencyRateDataModel != null)
+            {
+                currencyRateViewModel.BaseCurrency = currencyRateDataModel.BaseCurrency;
+                currencyRateViewModel.CurrencyRates = currencyRateDataModel.CurrencyRates.Select(x => x.ToModel()).ToList();
+                
+            }
+
+            return currencyRateViewModel != null ? View(currencyRateViewModel) : View();
+
+        }
+
+        public async Task<IActionResult> ConvertAmount(string baseCurr, string targetCurr, float amount)
+
+        {
+            CurrencyRateDataModel baseCurrRateViewModel = new();
+            CurrencyRateDataModel targetCurrRateViewModel = new();
+
+            if (!(String.IsNullOrEmpty(baseCurr) || String.IsNullOrEmpty(targetCurr) || amount < 0))
+            {             
+                try
+                {        
+                        baseCurrRateViewModel = await _client.GetLatestRates(baseCurr);
+                        targetCurrRateViewModel = await _client.GetLatestRates(targetCurr);
+                        
+
                 }
                 catch (Exception ex)
                 {
                     throw new Exception(ex.Message + (ex.InnerException != null ? ex.InnerException.Message : ""));
                 }
             }
-
-            return currencyRateViewModel != null ? View(currencyRateViewModel) : throw new Exception("No Hit \\ Ingen treff ! ");
-
+            return View();
         }
 
         public IActionResult Privacy()

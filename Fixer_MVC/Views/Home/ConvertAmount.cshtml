@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewData["Title"] = "ConvertAmount";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>ConvertAmount View</h1>
+
+<p>Hello from ConvertAmount View Template!</p>
+
+<form asp-action="ConvertAmount" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Base Currency:<input type="text" name="baseCurr" />
+            Target Currency:<input type="text" name="targetCurr" />
+            Amount:<input type="text" name="amount" />
+            <br />
+           
+            <input type="submit" value="ConvertAmount" class="btn btn-default" />
+            <!--<a asp-action="Index">Try Again!</a>-->
+        </p>
+    </div>
+</form>

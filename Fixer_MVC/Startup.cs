@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Fixer_MVC.DataModel;
 
 namespace Fixer_MVC
 {
@@ -42,7 +43,11 @@ namespace Fixer_MVC
 
             services.AddSingleton(servicePoints);
 
-            services.AddHttpClient<IFixerServiceClient, FixerServiceClient>(servicePoints.ApiTag,
+            services.AddHttpClient<
+                
+                
+                
+                IFixerServiceClient, FixerServiceClient>(servicePoints.ApiTag,
             //services.AddHttpClient(servicePoints.ApiTag,
                 client =>
                 {

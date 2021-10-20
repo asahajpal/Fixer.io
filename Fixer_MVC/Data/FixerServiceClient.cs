@@ -10,7 +10,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Globalization;
 
-namespace Fixer_MVC
+namespace Fixer_MVC.DataModel
 {
     public class FixerServiceClient : IFixerServiceClient
     {
@@ -23,59 +23,62 @@ namespace Fixer_MVC
             _settings = settings;
         }
 
-        public async Task<CurrencyRateViewModel> GetLatestRates(string sym )
+        public HttpClient Client => _client;
+
+        public async Task<CurrencyRateDataModel> GetLatestRates(string targetCurr )
         {
-            HttpResponseMessage lookupResult = await GetResultFromApi(sym);
+            HttpResponseMessage lookupResult = await GetResultFromApi(targetCurr);
 
             if (lookupResult.IsSuccessStatusCode)
             {
-                return ConvertApiResultToViewModel(lookupResult);
+                return ConvertApiResultToDataModel(lookupResult);
             }
             else //web api sent error response 
             {
                 //log response status here..
                 return null;
             }
-
-            async Task<HttpResponseMessage> GetResultFromApi(string sym)
-            {
-                HttpResponseMessage lookupResult;
-
-                string endpoint = "latest";
-
-                // prepare absolute Service Uri 
-                var reqUri = new Uri(string.Format("{0}{1}{2}",
-                    _client.BaseAddress.OriginalString, endpoint, "?access_key=" + _settings.AccessKey));
-
-                if (sym.Equals("*"))
-                    lookupResult = await _client.GetAsync(reqUri);
-                else
-                    lookupResult = await _client.GetAsync(reqUri + "&symbols=" + sym);
-                return lookupResult;
-            }
         }
 
-        private static CurrencyRateViewModel ConvertApiResultToViewModel(HttpResponseMessage lookupResult)
+        private async Task<HttpResponseMessage> GetResultFromApi(string sym)
+        {
+            HttpResponseMessage lookupResult;
+
+            string endpoint = "latest";
+
+            // prepare absolute Service Uri 
+            var reqUri = new Uri(string.Format("{0}{1}{2}",
+                _client.BaseAddress.OriginalString, endpoint, "?access_key=" + _settings.AccessKey));
+
+            if (sym.Equals("*"))
+                lookupResult = await _client.GetAsync(reqUri);
+            else
+                lookupResult = await _client.GetAsync(reqUri + "&symbols=" + sym);
+            return lookupResult;
+        }
+
+        private static CurrencyRateDataModel ConvertApiResultToDataModel(HttpResponseMessage lookupResult)
         {
             JObject response;
             string successVal;
-            var searchResults = new List<CurrencyRate>();
-            CurrencyRateViewModel currencyRateViewModel = new CurrencyRateViewModel();
+           
+            CurrencyRateDataModel currencyRateDataModel = new CurrencyRateDataModel();
 
             ProcessJsonResponse(lookupResult, out response, out successVal);
 
             if (successVal.Equals("true", StringComparison.OrdinalIgnoreCase))
             {
-                SerializeJson2ViewModel(searchResults, currencyRateViewModel, response);
+                SerializeJson2DataModel(currencyRateDataModel, response);
             }
             else
             {
-                currencyRateViewModel.errorInfo = response["error"].ToString();
+                if (response != null)
+                {
+                    throw (new Exception(message: response["error"].ToString()));
+                }
             }
 
-            currencyRateViewModel.CurrencyRates = searchResults;
-
-            return currencyRateViewModel;
+            return currencyRateDataModel;
         }
 
         private static void ProcessJsonResponse(HttpResponseMessage lookupResult, out JObject response, out string successVal)
@@ -87,8 +90,11 @@ namespace Fixer_MVC
             response = JObject.Parse(jsonString);
             successVal = response["success"].ToString();
         }
-        private static void SerializeJson2ViewModel(List<CurrencyRate> searchResults, CurrencyRateViewModel currencyRateViewModel, JObject response)
+        private static void SerializeJson2DataModel(
+            CurrencyRateDataModel currencyRateDataModel, JObject response
+            )
         {
+            var searchResults = new List<CurrencyRate>();
             // get JSON result objects into a list
             IList<JToken> results = response["rates"].Children().ToList();
 
@@ -102,10 +108,10 @@ namespace Fixer_MVC
                 searchResults.Add(currRateObj);
             }
 
-            currencyRateViewModel.BaseCurrency = response["base"].ToString();
-        }
+            currencyRateDataModel.CurrencyRates = searchResults;
 
-        public HttpClient Client => _client;
+            currencyRateDataModel.BaseCurrency = response["base"].ToString();
+        }
     }
 }
    

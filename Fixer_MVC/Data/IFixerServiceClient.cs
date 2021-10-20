@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Fixer_MVC
+namespace Fixer_MVC.DataModel
 {
     public interface IFixerServiceClient
     {
-        Task<CurrencyRateViewModel> GetLatestRates(string query);
+        Task<CurrencyRateDataModel> GetLatestRates(string tarCurr);
+
         HttpClient Client { get; }
     }
 }

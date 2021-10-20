@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Fixer_MVC.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Fixer_MVC.Models
+namespace Fixer_MVC.DataModel
 {
-    public class CurrencyRateView
+    public class CurrencyRate
     {
         [Display(Name = "Symbol")]
         [Required]
@@ -14,23 +15,24 @@ namespace Fixer_MVC.Models
         [Display(Name = "ExchangeRateValue")]
         [Required]
         public float value { get; set; }
+
     }
 
-    public class CurrencyRateViewModel
+    public class CurrencyRateDataModel
     {
-        public CurrencyRateViewModel()
+        public CurrencyRateDataModel(List<CurrencyRate> searchResult = null)
         {
-            
+            CurrencyRates = searchResult ?? new List<CurrencyRate>();
         }
-
         ///<summary>
         /// Gets or sets Customers.
         ///</summary>
-        public List<CurrencyRateView> CurrencyRates { get; set; }
-        public string errorInfo { get; set; }
+        public List<CurrencyRate> CurrencyRates { get; set; }
 
         public string BaseCurrency { get; set; }
 
     }
+
+
 
 }
