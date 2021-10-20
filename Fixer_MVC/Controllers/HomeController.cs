@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -59,23 +60,21 @@ namespace Fixer_MVC.Controllers
         public async Task<IActionResult> ConvertAmount(string baseCurr, string targetCurr, float amount)
 
         {
-            CurrencyRateDataModel baseCurrRateDataModel = new();
-            CurrencyRateDataModel targetCurrRateDataModel = new();
-
-            CurrencyRateViewModel currRate = new CurrencyRateViewModel();
+            float convertedAmount = 0;
 
             if (!(string.IsNullOrEmpty(baseCurr) || string.IsNullOrEmpty(targetCurr) || amount < 0))
             {             
                 try
-                {        
-                    
+                {
+                    convertedAmount = _client.ConvertAmount(baseCurr, targetCurr, amount).Result;
+
                 }
                 catch (Exception ex)
                 {
                     throw new Exception(ex.Message + (ex.InnerException != null ? ex.InnerException.Message : ""));
                 }
             }
-            return View(currRate);
+            return View(convertedAmount);
         }
 
         public IActionResult Privacy()

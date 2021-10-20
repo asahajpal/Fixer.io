@@ -9,6 +9,8 @@ namespace Fixer_MVC.DataModel
     {
         Task<CurrencyRateDataModel> GetLatestRates(string tarCurr);
 
+        Task<float> ConvertAmount(string targetCurr1, string targetCurr2, float amount);
+
         HttpClient Client { get; }
     }
 }

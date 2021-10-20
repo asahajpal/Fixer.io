@@ -25,6 +25,19 @@ namespace Fixer_MVC.DataModel
 
         public HttpClient Client => _client;
 
+        public async Task<float> ConvertAmount(string targetCurr1, string targetCurr2, float amount)
+        {
+            var lookupResult1 = await GetLatestRates(targetCurr1);
+            var lookupResult2 = await GetLatestRates(targetCurr2);
+
+            float baseValue = lookupResult1.CurrencyRates.First().value;
+            float targetValue = lookupResult2.CurrencyRates.First().value;
+
+            float exchangeRate = targetValue / baseValue;
+
+            float convertedAmount = exchangeRate * amount;
+            return convertedAmount;
+        }
         public async Task<CurrencyRateDataModel> GetLatestRates(string targetCurr )
         {
             HttpResponseMessage lookupResult = await GetResultFromApi(targetCurr);
