@@ -44,6 +44,7 @@ namespace Fixer_MVC.Controllers
                 }
             }
 
+            // Mapping from DataModel to ViewModel
             if (currencyRateDataModel != null)
             {
                 currencyRateViewModel.BaseCurrency = currencyRateDataModel.BaseCurrency;
@@ -58,17 +59,14 @@ namespace Fixer_MVC.Controllers
         public async Task<IActionResult> ConvertAmount(string baseCurr, string targetCurr, float amount)
 
         {
-            CurrencyRateDataModel baseCurrRateViewModel = new();
-            CurrencyRateDataModel targetCurrRateViewModel = new();
+            CurrencyRateDataModel baseCurrRateDataModel = new();
+            CurrencyRateDataModel targetCurrRateDataModel = new();
 
-            if (!(String.IsNullOrEmpty(baseCurr) || String.IsNullOrEmpty(targetCurr) || amount < 0))
+            if (!(string.IsNullOrEmpty(baseCurr) || string.IsNullOrEmpty(targetCurr) || amount < 0))
             {             
                 try
                 {        
-                        baseCurrRateViewModel = await _client.GetLatestRates(baseCurr);
-                        targetCurrRateViewModel = await _client.GetLatestRates(targetCurr);
-                        
-
+                    
                 }
                 catch (Exception ex)
                 {

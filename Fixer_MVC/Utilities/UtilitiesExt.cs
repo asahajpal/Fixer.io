@@ -8,7 +8,7 @@ using Fixer_MVC.Models;
 
 namespace Fixer_MVC
 {
-    public static class JsonExtensions
+    public static class Extensions
     {
         public static bool IsNullOrEmpty(this JToken token)
         {
