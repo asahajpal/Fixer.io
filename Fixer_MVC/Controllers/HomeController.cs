@@ -62,6 +62,8 @@ namespace Fixer_MVC.Controllers
             CurrencyRateDataModel baseCurrRateDataModel = new();
             CurrencyRateDataModel targetCurrRateDataModel = new();
 
+            CurrencyRateViewModel currRate = new CurrencyRateViewModel();
+
             if (!(string.IsNullOrEmpty(baseCurr) || string.IsNullOrEmpty(targetCurr) || amount < 0))
             {             
                 try
@@ -73,7 +75,7 @@ namespace Fixer_MVC.Controllers
                     throw new Exception(ex.Message + (ex.InnerException != null ? ex.InnerException.Message : ""));
                 }
             }
-            return View();
+            return View(currRate);
         }
 
         public IActionResult Privacy()

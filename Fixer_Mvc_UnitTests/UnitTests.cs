@@ -5,7 +5,9 @@ using Xunit;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Fixer_MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Proff_Mvc_UnitTests
@@ -28,6 +30,29 @@ namespace Proff_Mvc_UnitTests
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
             Assert.Equal<Type>(typeof(ViewResult), result.GetType());
+        }
+
+        [Fact]
+        public async Task ConvertAmount_ReturnsCorrectAmount()
+        {
+            // Arrange
+
+            var mockFixerServiceClient = new Mock<IFixerServiceClient>();
+            var mockLogger = new Mock<ILogger<HomeController>>();
+
+            mockFixerServiceClient.Setup(
+                client => client.GetLatestRates(It.IsAny<string>())).ReturnsAsync(GetTestRates()
+            );
+            var controller = new HomeController(mockLogger.Object, mockFixerServiceClient.Object);
+
+            // Act
+
+            var result = await controller.ConvertAmount(@"dfg", @"hjk", (float)45.78);
+            // Assert
+
+            var viewResult = Assert.IsType<ViewResult>(result);
+            var model = Assert.IsAssignableFrom<CurrencyRateViewModel>(viewResult.ViewData.Model);
+            Assert.Equal(2,model.CurrencyRates.First().value);
         }
 
         private static CurrencyRateDataModel GetTestRates()
