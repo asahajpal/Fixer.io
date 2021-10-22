@@ -49,7 +49,7 @@ namespace Fixer_MVC
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             // injecting FixerServiceClient here via DI so that it is available on demand
-            services.AddHttpClient<IFixerServiceClient, FixerServiceClient>(servicePoints.ApiTag,
+            services.AddHttpClient<IFixerServiceClient, IFixerServiceClient>(servicePoints.ApiTag,
                 client =>
                 {
                     client.BaseAddress = new Uri(servicePoints.BaseUrl);
@@ -88,7 +88,15 @@ namespace Fixer_MVC
         }
     }
 
-    public class FixerServiceSettings
+    public interface IFixerServiceSettings
+    {
+        string ApiTag { get; set; }
+        string AccessKey { get; set; }
+        string BaseUrl { get; set; }
+        string EndPoint { get; set; }
+    }
+
+    public class FixerServiceSettings : IFixerServiceSettings
     {
         public const string ServiceSettings = "ServiceSettings";
         public string ApiTag { get; set; }

@@ -15,9 +15,9 @@ namespace Fixer_MVC.DataModel
     public class FixerServiceClient : IFixerServiceClient
     {
         private readonly HttpClient _client;
-        private readonly FixerServiceSettings _settings;
+        private readonly IFixerServiceSettings _settings;
 
-        public FixerServiceClient(HttpClient client, FixerServiceSettings settings)
+        public FixerServiceClient(HttpClient client, IFixerServiceSettings settings)
         {
             _client = client;
             _settings = settings;
@@ -65,6 +65,7 @@ namespace Fixer_MVC.DataModel
 
             if (sym.Equals("*"))
                 lookupResult = await _client.GetAsync(reqUri);
+         
             else
                 lookupResult = await _client.GetAsync(reqUri + "&symbols=" + sym);
             return lookupResult;
