@@ -1,16 +1,12 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json.Linq;
-using Fixer_MVC.Models;
+﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Globalization;
 
-namespace Fixer_MVC.DataModel
+namespace Fixer_MVC.WebServices
 {
     public class FixerServiceClient : IFixerServiceClient
     {

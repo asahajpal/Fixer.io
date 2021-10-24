@@ -6,10 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Fixer_MVC.DataModel;
+using Fixer_MVC.WebServices;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fixer_MVC
@@ -42,14 +40,14 @@ namespace Fixer_MVC
             var servicePoints = new FixerServiceSettings();
             Configuration.GetSection(FixerServiceSettings.ServiceSettings).Bind(servicePoints);  // binding here
 
-            services.AddSingleton(servicePoints);
+            services.AddSingleton<IFixerServiceSettings, FixerServiceSettings>(fsc => servicePoints);
 
             // injecting (or registering) DbConext ie. ExchangeRateContext here to make it available on demand
             services.AddDbContext<ExchangeRateContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             // injecting FixerServiceClient here via DI so that it is available on demand
-            services.AddHttpClient<IFixerServiceClient, IFixerServiceClient>(servicePoints.ApiTag,
+            services.AddHttpClient<IFixerServiceClient, FixerServiceClient>(servicePoints.ApiTag,
                 client =>
                 {
                     client.BaseAddress = new Uri(servicePoints.BaseUrl);

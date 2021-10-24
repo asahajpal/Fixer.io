@@ -1,6 +1,4 @@
-using System;
-
-namespace Fixer_MVC.Models
+namespace Fixer_MVC.ViewModels
 {
     public class ErrorViewModel
     {

@@ -1,9 +1,9 @@
-﻿using Fixer_MVC.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Fixer_MVC.DataModel
+
+namespace Fixer_MVC.WebServices
 {
     public interface IFixerServiceClient
     {

@@ -11,11 +11,11 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Fixer_MVC;
-using Fixer_MVC.Models;
+using Fixer_MVC.WebServices;
 using Microsoft.AspNetCore.Mvc;
 using Moq.Protected;
 
-namespace Proff_Mvc_UnitTests
+namespace Fixer_Mvc_UnitTests
 {
     public class UnitTests
     {
@@ -62,8 +62,8 @@ namespace Proff_Mvc_UnitTests
                 "Difference between actual and expected exchange rate was above permissible limit !");
         }
 
-        // An example of a fragile Unit test, something which we do not need to have
-        // It is replaced with with Partial Moq in the following unit-test
+        // An example of a fragile Unit test, something which we do not need 
+        // The fragile test is corrected with  Moq by mock the HttpClient dependency in the following unit-test
         [Fact]
         public async Task FixerServiceClient_ConvertAmount_ReturnsCorrectAmount()
         {

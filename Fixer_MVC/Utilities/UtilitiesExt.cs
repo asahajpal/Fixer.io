@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Fixer_MVC.DataModel;
-using Fixer_MVC.Models;
+using Fixer_MVC.ViewModels;
+using Fixer_MVC.WebServices;
 
 namespace Fixer_MVC
 {
