@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Fixer_MVC.WebServices;
 using Fixer_MVC.ViewModels;
+using Fixer_MVC.DataModel;
 
 namespace Fixer_MVC.Controllers
 {
@@ -13,14 +14,17 @@ namespace Fixer_MVC.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IFixerServiceClient _client;
+        private readonly ExchangeRateContext _context;
 
         public HomeController(
             ILogger<HomeController> logger, 
-            IFixerServiceClient fixerClient
+            IFixerServiceClient fixerClient,
+            ExchangeRateContext context
         )
         {            
             _logger = logger;
             _client = fixerClient;
+            _context = context;
         }
 
         public async Task<IActionResult> Index( string targetCurr)

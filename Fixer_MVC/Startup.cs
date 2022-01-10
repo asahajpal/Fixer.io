@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using Fixer_MVC.DataModel;
 using Fixer_MVC.WebServices;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fixer_MVC
@@ -55,6 +56,7 @@ namespace Fixer_MVC
 
             //The AddDatabaseDeveloperPageExceptionFilter provides helpful error information in the development environment
             services.AddDatabaseDeveloperPageExceptionFilter();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

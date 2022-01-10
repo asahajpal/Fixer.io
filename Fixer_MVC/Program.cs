@@ -4,7 +4,8 @@ using Microsoft.Extensions.Hosting;
 using Fixer_MVC.DataModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-
+using Microsoft.AspNetCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Fixer_MVC
 {
@@ -13,6 +14,31 @@ namespace Fixer_MVC
         public static void Main(string[] args)
         {
             IHostBuilder hostBuilder = CreateHostBuilder(args);
+
+            /*
+            Startup startup = null;
+            IServiceCollection serviceCollection = null;
+
+
+            WebHost.CreateDefaultBuilder(args).ConfigureAppConfiguration(
+                (hostingContext, config) =>
+                {
+                    config.Sources.Clear();
+                    config.AddConfiguration(hostingContext.Configuration);
+                    config.AddJsonFile("appsettings.json");
+                    startup = new Startup(config.Build());
+                }).ConfigureServices(sc =>
+            {
+                startup.ConfigureServices(sc);
+                serviceCollection = sc;
+            }).UseStartup<EmptyStartup>().Build();
+
+            serviceCollection.BuildServiceProvider(new ServiceProviderOptions()
+            {
+                ValidateOnBuild = true,
+                ValidateScopes = true
+            });
+            */
 
             IHost host = hostBuilder.Build();
 
@@ -60,13 +86,21 @@ namespace Fixer_MVC
         }
 
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>().
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return 
+            Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>().
                     //UseKestrel();
                     UseIISIntegration();
-                });
+            });
+            
+        }
+    }
+
+    internal class EmptyStartup
+    {
+        public void Configure() {}
     }
 }
