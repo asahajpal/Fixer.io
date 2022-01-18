@@ -14,6 +14,7 @@ using Fixer_MVC;
 using Fixer_MVC.WebServices;
 using Microsoft.AspNetCore.Mvc;
 using Moq.Protected;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fixer_Mvc_UnitTests
 {
@@ -25,9 +26,10 @@ namespace Fixer_Mvc_UnitTests
             // Arrange
             var mockFixerServiceClient = new Mock<IFixerServiceClient>();
             var mockLogger = new Mock<ILogger<HomeController>>();
+            var mockDbContext = GetDatabaseContext().Result;
 
             mockFixerServiceClient.Setup(client => client.GetLatestRates(It.IsAny<string>())).ReturnsAsync(GetTestRates());
-            var controller = new HomeController(mockLogger.Object, mockFixerServiceClient.Object);
+            var controller = new HomeController(mockLogger.Object, mockFixerServiceClient.Object, mockDbContext);
 
             // Act
 
@@ -44,11 +46,12 @@ namespace Fixer_Mvc_UnitTests
             
             var mockFixerServiceClient = new Mock<IFixerServiceClient>();
             var mockLogger = new Mock<ILogger<HomeController>>();
+            var mockDbContext = GetDatabaseContext().Result;
 
             mockFixerServiceClient.Setup(
                 client => client.ConvertAmount(@"NOK", @"INR", (float)45.78)).ReturnsAsync((float)412.34
             );
-            var controller = new HomeController(mockLogger.Object, mockFixerServiceClient.Object);
+            var controller = new HomeController(mockLogger.Object, mockFixerServiceClient.Object, mockDbContext);
             
 
             // Act
@@ -132,6 +135,30 @@ namespace Fixer_Mvc_UnitTests
             var model = Assert.IsAssignableFrom<float>(result);
             Assert.True(Math.Abs(model - 410.41) < 0.1,
                 "Difference between actual and expected exchange rate was above permissible limit !");
+        }
+
+        private async Task<ExchangeRateContext> GetDatabaseContext()
+        {
+            var options = new DbContextOptionsBuilder<ExchangeRateContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+            var databaseContext = new ExchangeRateContext(options);
+            databaseContext.Database.EnsureCreated();
+            if (await databaseContext.ExchangeRates.CountAsync() <= 0)
+            {
+                for (int i = 1; i <= 10; i++)
+                {
+                    databaseContext.ExchangeRates.Add(new ExchangeRate()
+                    {                 
+                        SymbolBaseCurr = @"NOK",
+                        SymbolTargetCurr = @"INR",
+                        ExchangeRateValue = (float)9.007,
+                        ExchangeRatetDateTime = DateTime.Now
+                    });
+                    await databaseContext.SaveChangesAsync();
+                }
+            }
+            return databaseContext;
         }
 
         private static CurrencyRateDataModel GetTestRates()

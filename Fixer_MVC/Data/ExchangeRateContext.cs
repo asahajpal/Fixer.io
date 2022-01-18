@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Deedle;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fixer_MVC.DataModel
@@ -18,6 +19,12 @@ namespace Fixer_MVC.DataModel
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ExchangeRate>().ToTable("ExchangeRate");
+        }
+
+        // TimeSeries Db
+        public void DeedleTest()
+        {
+            var titanic = Frame.ReadCsv("titanic.csv").GroupRowsBy<int>("Pclass");
         }
     }
 

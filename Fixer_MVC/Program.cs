@@ -15,36 +15,10 @@ namespace Fixer_MVC
         {
             IHostBuilder hostBuilder = CreateHostBuilder(args);
 
-            /*
-            Startup startup = null;
-            IServiceCollection serviceCollection = null;
-
-
-            WebHost.CreateDefaultBuilder(args).ConfigureAppConfiguration(
-                (hostingContext, config) =>
-                {
-                    config.Sources.Clear();
-                    config.AddConfiguration(hostingContext.Configuration);
-                    config.AddJsonFile("appsettings.json");
-                    startup = new Startup(config.Build());
-                }).ConfigureServices(sc =>
-            {
-                startup.ConfigureServices(sc);
-                serviceCollection = sc;
-            }).UseStartup<EmptyStartup>().Build();
-
-            serviceCollection.BuildServiceProvider(new ServiceProviderOptions()
-            {
-                ValidateOnBuild = true,
-                ValidateScopes = true
-            });
-            */
-
             IHost host = hostBuilder.Build();
 
             CreateDbIfNotExists(host);
 
-            // Dispose the context when the Initialize method completes
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
@@ -53,6 +27,7 @@ namespace Fixer_MVC
                     var context = services.GetRequiredService<ExchangeRateContext>();
                     DbInitializer.Initialize(context);
                 }
+                // Dispose the context when the Initialize method completes
                 catch (Exception ex)
                 {
                     var logger = services.GetRequiredService<ILogger<Program>>();

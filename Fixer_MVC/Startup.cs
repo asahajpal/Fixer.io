@@ -41,7 +41,7 @@ namespace Fixer_MVC
             var servicePoints = new FixerServiceSettings();
             Configuration.GetSection(FixerServiceSettings.ServiceSettings).Bind(servicePoints);  // binding here
 
-            services.AddSingleton<IFixerServiceSettings, FixerServiceSettings>(fsc => servicePoints);
+            services.AddScoped<IFixerServiceSettings, FixerServiceSettings>(fsc => servicePoints);
 
             // injecting (or registering) DbConext ie. ExchangeRateContext here to make it available on demand
             services.AddDbContext<ExchangeRateContext>(options =>
