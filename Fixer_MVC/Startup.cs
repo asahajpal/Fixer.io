@@ -6,12 +6,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using Fixer_MVC.DataModel;
-using Fixer_MVC.WebServices;
+using ATGCustReg_MVC.DataModel;
+using ATGCustReg_MVC.WebServices;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace Fixer_MVC
+namespace ATGCustReg_MVC
 {
     public class Startup
     {

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Fixer_MVC.DataModel
+namespace ATGCustReg_MVC.DataModel
 {
     public class ExchangeRate
     {

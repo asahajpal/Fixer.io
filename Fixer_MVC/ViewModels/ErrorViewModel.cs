@@ -1,4 +1,4 @@
-namespace Fixer_MVC.ViewModels
+namespace ATGCustReg_MVC.ViewModels
 {
     public class ErrorViewModel
     {

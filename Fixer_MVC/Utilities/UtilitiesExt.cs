@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Fixer_MVC.DataModel;
-using Fixer_MVC.ViewModels;
-using Fixer_MVC.WebServices;
+using ATGCustReg_MVC.DataModel;
+using ATGCustReg_MVC.ViewModels;
+using ATGCustReg_MVC.WebServices;
 
-namespace Fixer_MVC
+namespace ATGCustReg_MVC
 {
     public static class Extensions
     {

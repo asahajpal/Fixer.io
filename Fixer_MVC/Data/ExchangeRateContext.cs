@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Deedle;
 using Microsoft.EntityFrameworkCore;
 
-namespace Fixer_MVC.DataModel
+namespace ATGCustReg_MVC.DataModel
 {
     public class ExchangeRateContext : DbContext
     {

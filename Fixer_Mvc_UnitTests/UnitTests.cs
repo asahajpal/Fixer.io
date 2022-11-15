@@ -1,5 +1,5 @@
-using Fixer_MVC.Controllers;
-using Fixer_MVC.DataModel;
+using ATGCustReg_MVC.Controllers;
+using ATGCustReg_MVC.DataModel;
 using Microsoft.Extensions.Logging;
 using Xunit;
 using Moq;
@@ -10,8 +10,8 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Fixer_MVC;
-using Fixer_MVC.WebServices;
+using ATGCustReg_MVC;
+using ATGCustReg_MVC.WebServices;
 using Microsoft.AspNetCore.Mvc;
 using Moq.Protected;
 using Microsoft.EntityFrameworkCore;

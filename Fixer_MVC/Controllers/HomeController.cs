@@ -4,11 +4,11 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Fixer_MVC.WebServices;
-using Fixer_MVC.ViewModels;
-using Fixer_MVC.DataModel;
+using ATGCustReg_MVC.WebServices;
+using ATGCustReg_MVC.ViewModels;
+using ATGCustReg_MVC.DataModel;
 
-namespace Fixer_MVC.Controllers
+namespace ATGCustReg_MVC.Controllers
 {
     public class HomeController : Controller
     {

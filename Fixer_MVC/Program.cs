@@ -1,13 +1,13 @@
 using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using Fixer_MVC.DataModel;
+using ATGCustReg_MVC.DataModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore;
 using Microsoft.Extensions.Configuration;
 
-namespace Fixer_MVC
+namespace ATGCustReg_MVC
 {
     public class Program
     {

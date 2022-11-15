@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Fixer_MVC.DataModel
+namespace ATGCustReg_MVC.DataModel
 {
     public static class DbInitializer
     {

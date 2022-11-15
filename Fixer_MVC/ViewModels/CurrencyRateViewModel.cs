@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Fixer_MVC.ViewModels
+namespace ATGCustReg_MVC.ViewModels
 {
     public class CurrencyRateView
     {

@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 
 
-namespace Fixer_MVC.WebServices
+namespace ATGCustReg_MVC.WebServices
 {
     public interface IFixerServiceClient
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Fixer_MVC.WebServices
+namespace ATGCustReg_MVC.WebServices
 {
     public class CurrencyRate
     {
