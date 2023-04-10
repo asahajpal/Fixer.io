@@ -10,6 +10,8 @@ using ATGCustReg_MVC.DataModel;
 
 namespace ATGCustReg_MVC.Controllers
 {
+    //[Route("api/[controller]")]
+    //[ApiController]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -26,7 +28,8 @@ namespace ATGCustReg_MVC.Controllers
             _client = fixerClient;
             _context = context;
         }
-
+       
+        [HttpGet()]
         public async Task<IActionResult> Index( string targetCurr)
 
         {
@@ -60,6 +63,7 @@ namespace ATGCustReg_MVC.Controllers
 
         }
 
+        [HttpGet()]
         public async Task<IActionResult> ConvertAmount(string baseCurr, string targetCurr, float amount)
 
         {
@@ -80,11 +84,12 @@ namespace ATGCustReg_MVC.Controllers
             return View(convertedAmount);
         }
 
+
         public IActionResult Privacy()
         {
             return View();
         }
-
+ 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

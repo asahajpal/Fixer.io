@@ -35,7 +35,19 @@ namespace ATGCustReg_MVC
                 options.AddPolicy("SiteCorsPolicy", corsBuilder.Build());
             });
 
+            //services.AddControllers();
+
             services.AddControllersWithViews();
+            services.AddMvcCore();
+            //services.AddMvc();
+
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            //services.AddEndpointsApiExplorer();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new() { Title = "FixerApi", Version = "v1" });
+            });
 
             // inject ServicePoints from appSettings.json
             var servicePoints = new FixerServiceSettings();
@@ -65,6 +77,14 @@ namespace ATGCustReg_MVC
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                //app.UseSwaggerUI();
+                
+                app.UseSwaggerUI(config =>
+                {
+                    config.SwaggerEndpoint("/swagger/v1/swagger.json", "FixerApi");
+                });
+                
             }
             else
             {
@@ -78,13 +98,15 @@ namespace ATGCustReg_MVC
             app.UseRouting();
 
             app.UseAuthorization();
-
+            
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
+            });          
+            
         }
     }
 

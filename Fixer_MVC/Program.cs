@@ -24,6 +24,7 @@ namespace ATGCustReg_MVC
         }
 
 
+
         private static void CreateDbIfNotExists(IHost host)
         {
             using (var scope = host.Services.CreateScope())
@@ -54,7 +55,7 @@ namespace ATGCustReg_MVC
                     //UseKestrel();
                     UseIISIntegration();
             });
-            
+
         }
     }
 
