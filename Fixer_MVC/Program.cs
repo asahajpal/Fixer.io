@@ -20,10 +20,7 @@ namespace ATGCustReg_MVC
             CreateDbIfNotExists(host);
 
             host.Run();
-
         }
-
-
 
         private static void CreateDbIfNotExists(IHost host)
         {

@@ -18,6 +18,7 @@ namespace ATGCustReg_MVC.WebServices
     {
         public CurrencyRateDataModel(List<CurrencyRate> searchResult = null)
         {
+            BaseCurrency = @"EUR";
             CurrencyRates = searchResult ?? new List<CurrencyRate>();
         }
         ///<summary>
