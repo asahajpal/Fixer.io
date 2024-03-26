@@ -97,6 +97,7 @@ namespace ATGCustReg_MVC
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             

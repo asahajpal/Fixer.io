@@ -10,8 +10,8 @@ using ATGCustReg_MVC.DataModel;
 
 namespace ATGCustReg_MVC.Controllers
 {
-    [Route("api/[controller]/[action]")]
-    [ApiController]
+    //[Route("api/[controller]/[action]")]
+    //[ApiController]
     //[Route("api/[controller]")]
     //[Route("api/")]
     public class HomeController : Controller
