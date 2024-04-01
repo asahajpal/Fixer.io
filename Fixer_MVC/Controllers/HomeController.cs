@@ -32,7 +32,7 @@ namespace ATGCustReg_MVC.Controllers
         }
 
 
-        [HttpGet("{targetCurr}")]
+        //[HttpGet("{targetCurr}")]
         public async Task<IActionResult> Index( string targetCurr)
 
         {
@@ -66,7 +66,7 @@ namespace ATGCustReg_MVC.Controllers
 
         }
 
-        [HttpGet("{baseCurr},{targetCurr},{amount}")]
+        //[HttpGet("{baseCurr},{targetCurr},{amount}")]
         public async Task<IActionResult> ConvertAmount(string baseCurr, string targetCurr, float amount)
 
         {
@@ -87,13 +87,13 @@ namespace ATGCustReg_MVC.Controllers
             return View(convertedAmount);
         }
 
-        [HttpGet()]
+        //[HttpGet()]
         public IActionResult Privacy()
         {
             return View();
         }
 
-        [HttpGet()]
+       // [HttpGet()]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

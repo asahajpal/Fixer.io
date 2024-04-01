@@ -57,7 +57,8 @@ namespace ATGCustReg_MVC
 
             // injecting (or registering) DbConext ie. ExchangeRateContext here to make it available on demand
             services.AddDbContext<ExchangeRateContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+                );
 
             // injecting FixerServiceClient here via DI so that it is available on demand
             services.AddHttpClient<IFixerServiceClient, FixerServiceClient>(servicePoints.ApiTag,
@@ -93,7 +94,7 @@ namespace ATGCustReg_MVC
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
-            //app.UseStaticFiles();
+            app.UseStaticFiles();
 
             app.UseRouting();
 
