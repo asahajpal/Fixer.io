@@ -25,7 +25,7 @@ namespace ATGCustReg_MVC.Controllers
             IFixerServiceClient fixerClient,
             ExchangeRateContext context
         )
-        {            
+        {        
             _logger = logger;
             _client = fixerClient;
             _context = context;

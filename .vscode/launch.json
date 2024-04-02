@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/WebApplication1/bin/Debug/net8.0/WebApplication1.dll",
+            "program": "${workspaceFolder}/BlazorTest/bin/Debug/net8.0/BlazorTest.dll",
             "program1": "${workspaceFolder}/Fixer_MVC/bin/Debug/net6.0/Fixer_MVC.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
