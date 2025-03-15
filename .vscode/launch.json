@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/BlazorTest/bin/Debug/net8.0/BlazorTest.dll",
-            "program1": "${workspaceFolder}/Fixer_MVC/bin/Debug/net6.0/Fixer_MVC.dll",
+            "program1": "${workspaceFolder}/Fixer_MVC/bin/Debug/net8.0/Fixer_MVC.dll",
             "args": [],
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/Fixer_MVC",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",

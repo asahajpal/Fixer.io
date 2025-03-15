@@ -2,7 +2,7 @@
 
   <PropertyGroup>
    <!-- <TargetFramework>netcoreapp3.1</TargetFramework> -->
-  <TargetFramework>net6.0</TargetFramework>
+  <TargetFramework>net8.0</TargetFramework>
   <UserSecretsId>6fe75756-2767-4733-9294-f8b0120eb86e</UserSecretsId>
   <AssemblyName>Fixer_MVC</AssemblyName>
   <RootNamespace>Fixer_MVC</RootNamespace> 

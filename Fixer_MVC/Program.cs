@@ -22,19 +22,6 @@ namespace ATGCustReg_MVC
             host.Run();
         }
 
-        public static int Factorial(int number)
-{
-    if (number == 0)
-    {
-        return 1;
-    }
-    else
-    {
-        // Here you might want to get suggestions on how to complete the factorial calculation
-        return number * Factorial(number - 1);
-        
-    }
-}
 
         private static void CreateDbIfNotExists(IHost host)
         {

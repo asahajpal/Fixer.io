@@ -180,7 +180,7 @@ namespace Fixer_MVC.Utilities
 
     public static class WinFormsExtensions
     {
-        public static void InvokeIfRequired(this Control control, MethodInvoker action)
+        public static void InvokeIfRequired(this Control control, System.Windows.Forms.MethodInvoker action)
         {
             // See Update 2 for edits Mike de Klerk suggests to insert here.
 
